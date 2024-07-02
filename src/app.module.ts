@@ -10,7 +10,7 @@ import { ProfileModule } from './profile/profile.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV}.env`,
+      envFilePath: `.env`,
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({ ...DataSourceConfig }),

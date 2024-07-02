@@ -6,3 +6,5 @@ orm.config.json
 docker.env
 /migrations
 /dist
+.env
+.env.example

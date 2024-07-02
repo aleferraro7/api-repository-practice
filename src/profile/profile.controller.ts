@@ -8,33 +8,37 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ProfileService } from './profile.service';
+import { ProfileDTO, UpdateProfileDTO } from './dto/profile.dto';
 
-@Controller('profile')
+@Controller('profiles')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
-  @Post()
-  create(@Body() createProfileDto) {
-    return this.profileService.create(createProfileDto);
+  @Post('register')
+  public async register(@Body() body: ProfileDTO) {
+    return this.profileService.create(body);
   }
 
   @Get()
-  findAll() {
+  public async findAll() {
     return this.profileService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.profileService.findOne(+id);
+  public async findOne(@Param('id') id: string) {
+    return this.profileService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProfileDto) {
-    return this.profileService.update(+id, updateProfileDto);
+  public async update(
+    @Param('id') id: string,
+    @Body() updateUser: UpdateProfileDTO,
+  ) {
+    return this.profileService.update(id, updateUser);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.profileService.remove(+id);
+  public async delete(@Param('id') id: string) {
+    return this.profileService.delete(id);
   }
 }

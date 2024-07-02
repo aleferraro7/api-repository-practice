@@ -1,12 +1,11 @@
 import { Expose } from 'class-transformer';
 import { BaseEntity } from '../../config/base.entity';
 import { Roles } from '../../constants/roles';
-import { Column, Entity, OneToOne } from 'typeorm';
-import { UserProfile } from './user-profile.entity';
+import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
-  @Column({ unique: true })
+  @Column()
   username: string;
 
   @Column({ unique: true })
@@ -18,7 +17,4 @@ export class User extends BaseEntity {
 
   @Column({ type: 'enum', enum: Roles })
   role: Roles;
-
-  @OneToOne(() => UserProfile, (userProfile) => userProfile.user)
-  profileUser: UserProfile;
 }
