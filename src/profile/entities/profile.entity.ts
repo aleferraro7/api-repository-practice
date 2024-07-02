@@ -1,9 +1,7 @@
 import { BaseEntity } from '../../config/base.entity';
 import { Level } from '../../constants/level';
 import { Position } from '../../constants/position';
-import { UserProfile } from '../../users/entities/user-profile.entity';
-import { User } from '../../users/entities/user.entity';
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'profiles' })
 export class Profile extends BaseEntity {
@@ -24,7 +22,4 @@ export class Profile extends BaseEntity {
 
   @Column()
   position: Position;
-
-  @OneToOne(() => UserProfile, (userProfile) => userProfile.user)
-  user: User;
 }
