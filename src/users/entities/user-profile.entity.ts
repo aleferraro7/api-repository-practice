@@ -5,9 +5,9 @@ import { Entity, OneToOne } from 'typeorm';
 
 @Entity({ name: 'user-profile' })
 export class UserProfile extends BaseEntity {
-  @OneToOne(() => User, (user) => user.profile)
+  @OneToOne(() => User, (user) => user.profileUser)
   user: User;
 
-  @OneToOne(() => Profile, (profile) => profile.user)
+  @OneToOne(() => Profile, (profile) => profile.userProfile)
   profile: Profile;
 }

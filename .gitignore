@@ -2,3 +2,7 @@
 /docker.compose.yml
 /node_modules
 node_modules
+orm.config.json
+docker.env
+/migrations
+/dist
