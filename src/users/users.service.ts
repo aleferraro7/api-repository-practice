@@ -4,6 +4,7 @@ import { User } from './entities/user.entity';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UpdateUserDTO, UserDTO } from './dto/user.dto';
 import { ErrorManager } from 'src/utils/error.manager';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -12,6 +13,7 @@ export class UsersService {
   ) {}
   public async create(body: UserDTO): Promise<User> {
     try {
+      body.password = await bcrypt.hash(body.password, 10);
       return await this.usersRepository.save(body);
     } catch (e) {
       throw ErrorManager.createSignatureError(e.message);
@@ -40,6 +42,44 @@ export class UsersService {
         .where({ id })
         .getOne();
 
+      if (!user) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'User not found',
+        });
+      }
+      return user;
+    } catch (e) {
+      throw ErrorManager.createSignatureError(e.message);
+    }
+  }
+
+  public async findByUsername(username: string) {
+    try {
+      const user = await this.usersRepository.findOne({
+        where: {
+          username,
+        },
+      });
+      if (!user) {
+        throw new ErrorManager({
+          type: 'BAD_REQUEST',
+          message: 'User not found',
+        });
+      }
+      return user;
+    } catch (e) {
+      throw ErrorManager.createSignatureError(e.message);
+    }
+  }
+
+  public async findByEmail(email: string) {
+    try {
+      const user = await this.usersRepository.findOne({
+        where: {
+          email,
+        },
+      });
       if (!user) {
         throw new ErrorManager({
           type: 'BAD_REQUEST',

@@ -1,10 +1,10 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsString,
   MinLength,
-  IsEnum,
 } from 'class-validator';
 import { Roles } from 'src/constants/roles';
 
