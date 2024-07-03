@@ -30,5 +30,8 @@ async function bootstrap() {
   await app.listen(configService.get('PORT'));
 
   console.log(`Application is running on: ${await app.getUrl()}`);
+
+  console.log('The server is running in: http://localhost:3000/api');
+  console.log('Swagger is running in: http://localhost:3000/docs/');
 }
 bootstrap();

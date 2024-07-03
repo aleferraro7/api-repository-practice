@@ -37,10 +37,7 @@ export class UsersService {
 
   public async findOne(id: string): Promise<User> {
     try {
-      const user: User = await this.usersRepository
-        .createQueryBuilder('user')
-        .where({ id })
-        .getOne();
+      const user: User = await this.usersRepository.findOne({ where: { id } });
 
       if (!user) {
         throw new ErrorManager({

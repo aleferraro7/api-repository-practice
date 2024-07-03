@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { PayloadToken } from './interfaces/auth.interface';
 import { LoginDTO } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
   public async login({
     username,
     password,
-  }: LoginDTO): Promise<{ access_token: string }> {
+  }: LoginDTO): Promise<{ access_token: string; user: User }> {
     try {
       const user = await this.usersService.findByUsername(username);
       if (!user) {
@@ -41,6 +42,7 @@ export class AuthService {
         access_token: await this.jwtService.signAsync(payload, {
           secret: process.env.JWT_SECRET,
         }),
+        user,
       };
     } catch (e) {
       throw ErrorManager.createSignatureError(e.message);
